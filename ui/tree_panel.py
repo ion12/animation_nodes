@@ -36,6 +36,10 @@ class TreePanel(bpy.types.Panel):
         layout.prop_search(tree, "sceneName", bpy.data, "scenes", icon = "SCENE_DATA", text = "Scene")
         layout.prop(tree, "editNodeLabels")
 
+        layout.separator()
+        layout.operator("an.duplicate_node_tree", text="Duplicate Node Tree", icon="PASTEDOWN")
+        layout.operator("an.remove_node_tree", text="Remove Node Tree", icon="X")
+
 
     @classmethod
     def getTree(cls):

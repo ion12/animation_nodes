@@ -19,8 +19,19 @@ class RemoveNodeTree(bpy.types.Operator):
         tree = context.space_data.node_tree
         tree.use_fake_user = False
         context.space_data.node_tree = None
+        prev = -1
+        if len(bpy.data.node_groups) > 1:
+            for t in bpy.data.node_groups:
+                if t.name == tree.name:
+                    if prev == -1:
+                        prev = len(bpy.data.node_groups) - 1                   
+                    context.space_data.node_tree = bpy.data.node_groups[prev] 
+                    break
+                prev += 1          
         # the doc says this can maybe crash Blender
         # I didn't experienced this yet
         tree.user_clear()
-        bpy.data.node_groups.remove(tree)
+        bpy.data.node_groups.remove(tree)         
+#        if len(bpy.data.node_groups) > 0:          
+#            context.space_data.node_tree = bpy.data.node_groups[0]
         return {"FINISHED"}
